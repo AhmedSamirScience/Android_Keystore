@@ -1,75 +1,36 @@
 package com.khales.preference_datastore
 
-import android.content.Context
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.annotation.RequiresApi
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
-import java.util.*
-
-
-
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore("setting")
-
-val KEY_NAME = stringPreferencesKey( "key_name")
+import android.widget.Toast
+import com.khales.preference_datastore.encryptionAndDecryptionByKeyStore.EncryptionDecryptionManager
 
 class MainActivity : AppCompatActivity() {
-
-    var cipherText : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val decryptionData = findViewById<TextView>(R.id.text)
+        val inputEditText = findViewById<EditText>(R.id.dataEditText)
+        val encryptBtn = findViewById<Button>(R.id.encrypt)
+        val decryptBtn = findViewById<Button>(R.id.decrypt)
 
-        val cryptoData = CryptoData()
-
-
-        val textData = findViewById<TextView>(R.id.text)
-        val inputEditText = findViewById<EditText>(R.id.data)
-        val saveBu = findViewById<Button>(R.id.save)
-        val readBu = findViewById<Button>(R.id.read)
-
-
-         saveBu.setOnClickListener{
-             val bytes = inputEditText.text.toString().toByteArray()
-             cipherText =   android.util.Base64.encodeToString(cryptoData.encrypt(bytes= bytes), 0)
-
-             inputEditText.setText(cipherText)
+        encryptBtn.setOnClickListener{
+            if(inputEditText.text.toString().equals(""))
+                Toast.makeText(this , "Enter data for doing the encryption process", Toast.LENGTH_SHORT).show()
+            else
+                inputEditText.setText(EncryptionDecryptionManager().encryptData(data = inputEditText.text.toString(),keyModelResponse= EncryptionDecryptionManager().createKey() ))
          }
 
-        readBu.setOnClickListener{
-
-           // val originalText = cryptoData.decrypt( Base64.getDecoder.decode(cipherText))?.decodeToString()
-            val originalText = cryptoData.decrypt( android.util.Base64.decode(cipherText, android.util.Base64.DEFAULT))?.decodeToString()
-            inputEditText.setText(originalText)
+        decryptBtn.setOnClickListener{
+            if(inputEditText.text.toString().equals(""))
+                Toast.makeText(this , "Enter data for doing the encryption process before doing decryption", Toast.LENGTH_SHORT).show()
+            else
+                decryptionData.text = EncryptionDecryptionManager().decryptData(data = inputEditText.text.toString(),keyModelResponse= EncryptionDecryptionManager().createKey() )
         }
-
     }
-
-    private fun saveName (name:String )
-    {
-
-        lifecycleScope.launch {
-            dataStore.edit {
-                it[KEY_NAME]
-            }
-        }
-
-    }
-
-   /* private fun read Name (name:String )
-    {
-
-    }*/
 }

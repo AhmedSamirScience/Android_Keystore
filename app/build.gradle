@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.khales.preference_datastore"
-        minSdk 21
+        minSdk 23
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -24,6 +24,9 @@ android {
         }
     }
     compileOptions {
+        // Flag to enable support for the new language APIs (for avoiding require api levels like 23 or 23)
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -47,6 +50,10 @@ dependencies {
 
     //this dependency is for importing data store third party library
     implementation 'androidx.datastore:datastore-preferences-android:1.1.0-alpha04'
+
+
+    // use it when you have a conflict with minimum api required like 23 or 24
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
 
 }
