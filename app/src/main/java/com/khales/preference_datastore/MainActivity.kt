@@ -8,6 +8,10 @@ import android.widget.TextView
 import android.widget.Toast
 import com.khales.preference_datastore.encryptionAndDecryptionByKeyStore.EncryptionDecryptionManager
 
+/**
+ * if you want to go deep inside this topic you can use this link it will be useful
+ * https://medium.com/quick-code/understanding-the-advanced-encryption-standard-7d7884277e7
+ */
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
