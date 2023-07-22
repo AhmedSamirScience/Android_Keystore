@@ -36,6 +36,8 @@ import javax.crypto.Cipher
 
         /**
          * transfer byte data to string
+         *
+         * Note: android.util.Base64.encodeToString i use this to avoid compiling greater than 21
          */
         return android.util.Base64.encodeToString(iv + encrypted, 0)
     }

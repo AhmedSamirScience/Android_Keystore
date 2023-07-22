@@ -23,6 +23,9 @@ class DecryptionModule : BiFunction<String, KeyModelResponse, String> {
         cipher.init(Cipher.ENCRYPT_MODE,keyModelResponse.secretKey )
 
 
+        /**
+         * Note: android.util.Base64.decode(data, android.util.Base64.DEFAULT) i use this to avoid compiling greater than 21
+         */
         val dataInBytes =  android.util.Base64.decode(data, android.util.Base64.DEFAULT)
         val iv = dataInBytes.copyOfRange(0, cipher.blockSize)
         val dataAfterBlockSize = dataInBytes.copyOfRange(cipher.blockSize, dataInBytes.size)
@@ -34,6 +37,7 @@ class DecryptionModule : BiFunction<String, KeyModelResponse, String> {
 
         /**
          * transfer byte data to string
+         *
          */
         return cipher.doFinal(dataAfterBlockSize).decodeToString()
     }
