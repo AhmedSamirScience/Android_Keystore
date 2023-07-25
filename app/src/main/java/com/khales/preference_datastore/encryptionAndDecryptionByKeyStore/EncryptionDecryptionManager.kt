@@ -5,6 +5,9 @@ import com.khales.preference_datastore.encryptionAndDecryptionByKeyStore.keyStor
 import com.khales.preference_datastore.encryptionAndDecryptionByKeyStore.keyStoreIntegration.models.KeyModelRequest
 import com.khales.preference_datastore.encryptionAndDecryptionByKeyStore.keyStoreIntegration.models.KeyModelResponse
 
+/**
+ * * This class was constructed following the principles of Procedural Module Cohesion.
+ */
 class EncryptionDecryptionManager {
 
      fun createKey (): KeyModelResponse
